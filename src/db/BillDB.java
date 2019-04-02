@@ -1,11 +1,13 @@
 package db;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-
 import servis.Bill;
+import servis.TypeOfComputer;
+import util.BillPaid;
+import util.MyArrayList;
 
 public class BillDB 
 {
@@ -90,21 +92,10 @@ public class BillDB
 			return null;
 		}
 	}
-	/**
-	 * 
-	 * @param isPaid ALL for all, TRUE for paid and FALSE for not paid
-	 * @return
-	 */
-	public ArrayList<Bill> readBills(String paid)
+	private MyArrayList<Bill> readBills(String query)
 	{
-		String query = "";
-		ArrayList<Bill> listaBill = new ArrayList<>();
-		if (paid.equalsIgnoreCase("true"))
-			 query = "SELECT * FROM bill WHERE isPaid = true";
-		else if (paid.equalsIgnoreCase("false"))
-			query = "SELECT * FROM bill WHERE isPaid = false";
-		else
-			query = "SELECT * FROM bill";
+		MyArrayList<Bill> listaBill = new MyArrayList<>();
+		
 		try
 		{
 			PreparedStatement prepS = db.conn.prepareStatement(query);
@@ -128,6 +119,26 @@ public class BillDB
 			return listaBill;
 		}
 	}
+	
+	/**
+	 * 
+	 * @param isPaid ALL for all, TRUE for paid and FALSE for not paid
+	 * @return
+	 */
+	public MyArrayList<Bill> readBillsPaid(String paid)
+	{
+		String query = "";
+		
+		if (paid.equalsIgnoreCase("true"))
+			 query = "SELECT * FROM bill WHERE isPaid = true";
+		else if (paid.equalsIgnoreCase("false"))
+			query = "SELECT * FROM bill WHERE isPaid = false";
+		else
+			query = "SELECT * FROM bill";
+		MyArrayList<Bill> listaBill = this.readBills(query);
+		return listaBill;
+	}
+	
 	/**
 	 * 
 	 * @param paid ALL for all, TRUE for paid and FALSE for not paid
@@ -135,10 +146,9 @@ public class BillDB
 	 * @param operators >= for higher, <= for lower, = for equals
 	 * @return
 	 */
-	public ArrayList<Bill> readBillsWherePriceIs(String paid, double price, String operators)
+	public MyArrayList<Bill> readBillsWherePriceIs(String paid, double price, String operators)
 	{
 		String query = "";
-		ArrayList<Bill> listaBill = new ArrayList<>();
 		
 		if (paid.equalsIgnoreCase("true"))
 		{
@@ -167,29 +177,87 @@ public class BillDB
 			else
 				query = "SELECT * FROM bill WHERE priceOfServis = " + price;
 		}
-		
-		try
+		MyArrayList<Bill> listaBill = this.readBills(query);
+		return listaBill;
+	}
+	
+	private void printResult (String query)
+	{
+		PreparedStatement prepS;
+		try 
 		{
-			PreparedStatement prepS = db.conn.prepareStatement(query);
-			
+			prepS = db.conn.prepareStatement(query);
 			ResultSet res = prepS.executeQuery();
+			if (res.next())
+				System.out.println(res.getDouble("newField") + System.lineSeparator());
 			
-			while (res.next()) 
-			{
-				int idBill = res.getInt("idBill");
-				String note = res.getString("note").trim();
-				double priceOfServis = res.getDouble("priceOfServis");
-				boolean isPaid = res.getBoolean("isPaid");
-				Bill bill = new Bill(idBill, note, priceOfServis, isPaid);
-				listaBill.add(bill);
-			}
-			return listaBill;
-		}
+		} 
 		catch (SQLException e) 
 		{
+			
 			e.printStackTrace();
-			return listaBill;
 		}
 	}
+	
+	public void printAvgPrice ()
+	{
+		System.out.print("AVG value for price of service is: ");
+		printResult("SELECT idBill, priceOfServis, isPaid, AVG(priceOfServis) AS newField FROM bill");
+	}
+	
+	public MyArrayList<Bill> printSumIsPaid (boolean paid)
+	{
+		String query1 = "";
+		String query2 = "";
+		if (paid == true)
+		{
+			query1 = "SELECT * , SUM(priceOfServis) AS newField FROM bill WHERE isPaid = true";
+			query2 = "SELECT * FROM bill WHERE isPaid = true";
+		}
+		else
+		{
+			query1= "SELECT * , SUM(priceOfServis) AS newField FROM bill WHERE isPaid = false";
+			query2 = "SELECT * FROM bill WHERE isPaid = false";
+		}
+		MyArrayList<Bill> list = this.readBills(query2);
+		System.out.print("Sum of " + BillPaid.isPaid(paid) + " is ");
+		this.printResult(query1);
+		
+		return list;
+	}
+	
+	public MyArrayList<Bill> printSumByComputerType (TypeOfComputer typeOfComputer)
+	{
+		String query1 = "";
+		String query2 = "";
+		
+		if (typeOfComputer == TypeOfComputer.Desktop)
+		{
+			query1 = "SELECT * , SUM(priceOfServis) AS newField FROM bill, recordofservis, computer WHERE bill.idBill = recordofservis.billId AND computer.idComputer = recordofservis.computerId AND computer.typeOfComputer = 'Desktop'";
+			query2 = "SELECT * FROM bill, recordofservis, computer WHERE bill.idBill = recordofservis.billId AND computer.idComputer = recordofservis.computerId AND computer.typeOfComputer = 'Desktop'";
+		}
+		else
+		{
+			query1 = "SELECT * , SUM(priceOfServis) AS newField FROM bill, recordofservis, computer WHERE bill.idBill = recordofservis.billId AND computer.idComputer = recordofservis.computerId AND computer.typeOfComputer = 'Laptop'";
+			query2 = "SELECT * FROM bill, recordofservis, computer WHERE bill.idBill = recordofservis.billId AND computer.idComputer = recordofservis.computerId AND computer.typeOfComputer = 'Laptop'";
+		}
+		MyArrayList<Bill> list = this.readBills(query2);
+		System.out.print("Sum of " + typeOfComputer.toString() + " on service is ");
+		this.printResult(query1);
+		return list;
+	}
+	
+	/**
+	 * @param paid ALL for all, TRUE for paid and FALSE for not paid
+	 * @param date
+	 * @param operators >= for higher, <= for lower, = for equals
+	 * @return
+	 */
+	public MyArrayList<Bill> printSumByDate (String paid, Date date, String operators)
+	{
+		MyArrayList<Bill> list = new MyArrayList<>();
+		return list;
+	}
+	
 	
 }

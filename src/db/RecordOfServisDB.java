@@ -11,7 +11,7 @@ import servis.Komitent;
 import servis.RecordOfServis;
 import servis.Serviser;
 import servis.StatusOfServis;
-import util.ArrayListRecordOfServis;
+import util.MyArrayList;
 
 public class RecordOfServisDB 
 {
@@ -30,7 +30,7 @@ public class RecordOfServisDB
 			if (recordOfServis.getServiser() != null)
 				prepS.setInt(4, recordOfServis.getServiser().getIdServiser());
 			else 
-				prepS.setNull(4, Types.BIGINT);;
+				prepS.setNull(4, Types.BIGINT);
 			prepS.setString(5, recordOfServis.getNoteOfDefect());
 			if (recordOfServis.getBill() != null)
 				prepS.setInt(6, recordOfServis.getBill().getIdBill());
@@ -131,9 +131,9 @@ public class RecordOfServisDB
 	 * @param query
 	 * @return RecordOfServis for input query
 	 */
-	private ArrayListRecordOfServis<RecordOfServis> readRecordsOfServis (String query)
+	private MyArrayList<RecordOfServis> readRecordsOfServis (String query)
 	{
-		ArrayListRecordOfServis<RecordOfServis> listaRecordsOfServis = new ArrayListRecordOfServis<>();
+		MyArrayList<RecordOfServis> listaRecordsOfServis = new MyArrayList<>();
 		try
 		{
 			//String query = "SELECT * FROM recordofservis";
@@ -165,9 +165,9 @@ public class RecordOfServisDB
 		}
 	}
 	
-	public ArrayListRecordOfServis<RecordOfServis> readAllRecordsOfServis()
+	public MyArrayList<RecordOfServis> readAllRecordsOfServis()
 	{
-		ArrayListRecordOfServis<RecordOfServis> listaRecordsOfServis = readRecordsOfServis("SELECT * FROM recordofservis");
+		MyArrayList<RecordOfServis> listaRecordsOfServis = readRecordsOfServis("SELECT * FROM recordofservis");
 		return listaRecordsOfServis;
 	}
 	
@@ -176,14 +176,14 @@ public class RecordOfServisDB
 	 * @param paid - true or false
 	 * @return ArrayList<RecordOfServis>
 	 */
-	public ArrayListRecordOfServis<RecordOfServis> readRecordsOfServisPaid(Boolean paid)
+	public MyArrayList<RecordOfServis> readRecordsOfServisPaid(Boolean paid)
 	{
 		String query;
 		if (paid == true)
 			query = "SELECT * FROM recordofservis INNER JOIN bill ON recordofservis.billId = bill.idBill WHERE bill.isPaid = true";
 		else
 			query = "SELECT * FROM recordofservis INNER JOIN bill ON recordofservis.billId = bill.idBill WHERE bill.isPaid = false";
-		ArrayListRecordOfServis<RecordOfServis> listaRecordsOfServis = readRecordsOfServis(query);
+		MyArrayList<RecordOfServis> listaRecordsOfServis = readRecordsOfServis(query);
 		return listaRecordsOfServis;
 	}
 	

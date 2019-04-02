@@ -3,6 +3,9 @@ package app;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 
 import servis.Bill;
 import servis.Computer;
@@ -12,7 +15,7 @@ import servis.RecordOfServis;
 import servis.Serviser;
 import servis.StatusOfServis;
 import servis.TypeOfComputer;
-import util.ArrayListRecordOfServis;
+import util.MyArrayList;
 
 @SuppressWarnings("unused")
 public class App {
@@ -34,13 +37,24 @@ public class App {
 		
 		
 		//svi servisi
-		ArrayListRecordOfServis<RecordOfServis> list = new RecordOfServis().recordOfServisDB.readAllRecordsOfServis();
-		list.sort(ArrayListRecordOfServis.sortByServicePrice);
-		list.print();
+		MyArrayList<RecordOfServis> list = new RecordOfServis().recordOfServisDB.readAllRecordsOfServis();
+		list.sort(MyArrayList.ComparatorsRecordOfServis.sortByDateOfReciept);
+		//list.print();
+		
 		
 		//placeni servisi
-		//ArrayListRecordOfServis<RecordOfServis> list = new RecordOfServis().recordOfServisDB.readRecordsOfServisPaid(true);
-		//list.print();
+		MyArrayList<RecordOfServis> list2 = new RecordOfServis().recordOfServisDB.readRecordsOfServisPaid(true);
+		//list2.print();
+		
+		//new Bill().billDB.printAvgPrice();
+		
+//		MyArrayList<Bill> listBill = new Bill().billDB.printSumIsPaid(false);
+//		listBill.print();
+		
+		MyArrayList<Bill> listBill = new Bill().billDB.printSumByComputerType(TypeOfComputer.Laptop);
+		
+		listBill.print();
+		
 	}
 
 }

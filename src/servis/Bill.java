@@ -35,7 +35,7 @@ public class Bill
 	@Override
 	public String toString() 
 	{
-		return "ID bill: " + this.idBill + ", Price of servis is " + this.priceOfServis + ", " + BillPaid.isPaid(this.isPaid) + "\nNote for bill: " + this.note;
+		return "ID bill: " + this.idBill + ", Price of servis is " + this.priceOfServis + ", " + BillPaid.isPaid(this.isPaid) + "\nNote for bill: " + this.note + "\n";
 	}
 
 	public String getNote() {return note;}
