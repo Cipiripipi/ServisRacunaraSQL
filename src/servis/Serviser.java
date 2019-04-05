@@ -18,7 +18,6 @@ public class Serviser
 		this.name = name;
 		this.password = password;
 		this.salary = salary;
-		serviserDB.addServiser(this);
 	}
 	
 	public Serviser(int idServiser, String name, String password, double salary) 

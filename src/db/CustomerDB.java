@@ -5,20 +5,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import servis.Komitent;
+import servis.Customer;
 
-public class KomitentDB 
+public class CustomerDB 
 {
 	Database db = Database.getKonekcijaNaBazu();
 	
-	public void addKomitent(Komitent komitent)
+	public void addCustomer(Customer customer)
 	{
 		try 
 		{
-			String query = "INSERT INTO komitent (name, telephoneNumber) VALUES (?, ?)";
+			String query = "INSERT INTO customer (name, telephoneNumber) VALUES (?, ?)";
 			PreparedStatement prepS = db.conn.prepareStatement(query);
-			prepS.setString(1, komitent.getName());
-			prepS.setString(2, komitent.getTelephoneNumber());
+			prepS.setString(1, customer.getName());
+			prepS.setString(2, customer.getTelephoneNumber());
 			prepS.executeUpdate();
 			prepS.close();
 		} 
@@ -28,15 +28,15 @@ public class KomitentDB
 		}
 	}
 	
-	public void updateKomitent(Komitent komitent)
+	public void updateCustomer(Customer customer)
 	{
 		try 
 		{
-			String query = "UPDATE komitent SET name = ?, telephoneNumber = ? WHERE idKomitent = ?";
+			String query = "UPDATE customer SET name = ?, telephoneNumber = ? WHERE idCustomer = ?";
 			PreparedStatement prepS = db.conn.prepareStatement(query);
-			prepS.setString(1, komitent.getName());
-			prepS.setString(2, komitent.getTelephoneNumber());
-			prepS.setInt(3, komitent.getIdKomitent());
+			prepS.setString(1, customer.getName());
+			prepS.setString(2, customer.getTelephoneNumber());
+			prepS.setInt(3, customer.getIdCustomer());
 			prepS.executeUpdate();
 			prepS.close();
 		} 
@@ -46,13 +46,13 @@ public class KomitentDB
 		}
 	}
 	
-	public void deleteKomitent(Komitent komitent)
+	public void deleteCustomer(Customer customer)
 	{
 		try 
 		{
-			String query = "DELETE FROM komitent WHERE idKomitent = ?";
+			String query = "DELETE FROM customer WHERE idCustomer = ?";
 			PreparedStatement prepS = db.conn.prepareStatement(query);
-			prepS.setInt(1, komitent.getIdKomitent());
+			prepS.setInt(1, customer.getIdCustomer());
 			prepS.executeUpdate();
 			prepS.close();
 		} 
@@ -62,14 +62,14 @@ public class KomitentDB
 		}
 	}
 	
-	public Komitent readKomitent(int idKomitent)
+	public Customer readCustomer(int idCustomer)
 	{
 		try
 		{
-			String query = "SELECT * FROM komitent WHERE idKomitent = ?";
+			String query = "SELECT * FROM customer WHERE idCustomer = ?";
 			
 			PreparedStatement prepS = db.conn.prepareStatement(query);
-			prepS.setInt(1, idKomitent);
+			prepS.setInt(1, idCustomer);
 			
 			ResultSet res = prepS.executeQuery();
 			
@@ -77,8 +77,8 @@ public class KomitentDB
 			{
 				String name = res.getString("name").trim();
 				String telephoneNumber = res.getString("telephoneNumber").trim();
-				Komitent komitent = new Komitent(idKomitent, name, telephoneNumber);
-				return komitent;
+				Customer customer = new Customer(idCustomer, name, telephoneNumber);
+				return customer;
 			}
 			return null;
 		}
@@ -89,12 +89,12 @@ public class KomitentDB
 		}
 	}
 	
-	public ArrayList<Komitent> readKomitents()
+	public ArrayList<Customer> readCustomer()
 	{
-		ArrayList<Komitent> listaKomitent = new ArrayList<>();
+		ArrayList<Customer> listCustomors = new ArrayList<>();
 		try
 		{
-			String query = "SELECT * FROM komitent";
+			String query = "SELECT * FROM customer";
 			
 			PreparedStatement prepS = db.conn.prepareStatement(query);
 			
@@ -102,18 +102,18 @@ public class KomitentDB
 			
 			while (res.next()) 
 			{
-				int idKomitent = res.getInt("idKomitent");
+				int idKomitent = res.getInt("idCustomer");
 				String name = res.getString("name").trim();
 				String telephoneNumber = res.getString("telephoneNumber").trim();
-				Komitent komitent = new Komitent(idKomitent, name, telephoneNumber);
-				listaKomitent.add(komitent);
+				Customer customer = new Customer(idKomitent, name, telephoneNumber);
+				listCustomors.add(customer);
 			}
-			return listaKomitent;
+			return listCustomors;
 		}
 		catch (SQLException e) 
 		{
 			e.printStackTrace();
-			return listaKomitent;
+			return listCustomors;
 		}
 	}
 }

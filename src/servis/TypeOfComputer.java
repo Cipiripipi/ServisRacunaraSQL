@@ -17,14 +17,5 @@ public enum TypeOfComputer
 		{
 			return "Laptop";
 		}
-	},
-	//namerno nije ubaceno u bazu
-	Tablet
-	{
-		@Override
-		public String toString() 
-		{
-			return "Tablet";
-		}
 	}
 }

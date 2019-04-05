@@ -7,10 +7,11 @@ import java.sql.SQLException;
 import java.sql.Types;
 import servis.Bill;
 import servis.Computer;
-import servis.Komitent;
+import servis.Customer;
 import servis.RecordOfServis;
 import servis.Serviser;
 import servis.StatusOfServis;
+import servis.TypeOfComputer;
 import util.MyArrayList;
 
 public class RecordOfServisDB 
@@ -21,12 +22,12 @@ public class RecordOfServisDB
 	{
 		try 
 		{
-			String query = "INSERT INTO recordofservis (statusOfServis, computerId, komitentId, serviserId, noteOfDefect, billId, dateOfReciept, dateOfReturn) "
+			String query = "INSERT INTO recordofservis (statusOfServis, computerId, customerId, serviserId, noteOfDefect, billId, dateOfReciept, dateOfReturn) "
 					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement prepS = db.conn.prepareStatement(query);
 			prepS.setString(1, recordOfServis.getStatusOfServis().toString());
 			prepS.setInt(2, recordOfServis.getComputer().getIdComputer());
-			prepS.setInt(3, recordOfServis.getKomitent().getIdKomitent());
+			prepS.setInt(3, recordOfServis.getCustomer().getIdCustomer());
 			if (recordOfServis.getServiser() != null)
 				prepS.setInt(4, recordOfServis.getServiser().getIdServiser());
 			else 
@@ -51,12 +52,12 @@ public class RecordOfServisDB
 	{
 		try
 		{
-			String query = "UPDATE recordofservis SET statusOfServis = ?, computerId = ?, komitentId = ?, serviserId = ?, noteOfDefect = ?, billId = ?, dateOfReciept = ?, dateOfReturn = ? "
+			String query = "UPDATE recordofservis SET statusOfServis = ?, computerId = ?, customerId = ?, serviserId = ?, noteOfDefect = ?, billId = ?, dateOfReciept = ?, dateOfReturn = ? "
 				+ "WHERE idRecordOfServis = ?";
 			PreparedStatement prepS = db.conn.prepareStatement(query);
 			prepS.setString(1, recordOfServis.getStatusOfServis().toString());
 			prepS.setInt(2, recordOfServis.getComputer().getIdComputer());
-			prepS.setInt(3, recordOfServis.getKomitent().getIdKomitent());
+			prepS.setInt(3, recordOfServis.getCustomer().getIdCustomer());
 			if (recordOfServis.getServiser() != null)
 				prepS.setInt(4, recordOfServis.getServiser().getIdServiser());
 			else 
@@ -108,13 +109,13 @@ public class RecordOfServisDB
 			{
 				StatusOfServis statusOfServis = StatusOfServis.valueOf(res.getString("statusOfServis"));
 				int computerId = res.getInt("computerId");
-				int komitentId = res.getInt("komitentId");
+				int customerId = res.getInt("customerId");
 				int serviserId = res.getInt("serviserId");
 				String noteOfDefect = res.getString("noteOfDefect");
 				int billId = res.getInt("billId");
 				Date dateOfReciept = res.getDate("dateOfReciept");
 				Date dateOfReturn = res.getDate("dateOfReturn");
-				RecordOfServis recordOfServis = new RecordOfServis(idRecordOfServis, statusOfServis, new Computer().computerDB.readComputer(computerId), new Komitent().komitentDB.readKomitent(komitentId)
+				RecordOfServis recordOfServis = new RecordOfServis(idRecordOfServis, statusOfServis, new Computer().computerDB.readComputer(computerId), new Customer().customerDB.readCustomer(customerId)
 						, new Serviser().serviserDB.readServiser(serviserId), noteOfDefect, new Bill().billDB.readBill(billId), dateOfReciept, dateOfReturn);
 				return recordOfServis;
 			}
@@ -146,13 +147,13 @@ public class RecordOfServisDB
 				int idRecordOfServis = res.getInt("idRecordOfServis");
 				StatusOfServis statusOfServis = StatusOfServis.valueOf(res.getString("statusOfServis"));
 				int computerId = res.getInt("computerId");
-				int komitentId = res.getInt("komitentId");
+				int customerId = res.getInt("komitentId");
 				int serviserId = res.getInt("serviserId");
 				String noteOfDefect = res.getString("noteOfDefect");
 				int billId = res.getInt("billId");
 				Date dateOfReciept = res.getDate("dateOfReciept");
 				Date dateOfReturn = res.getDate("dateOfReturn");
-				RecordOfServis recordOfServis = new RecordOfServis(idRecordOfServis, statusOfServis, new Computer().computerDB.readComputer(computerId), new Komitent().komitentDB.readKomitent(komitentId)
+				RecordOfServis recordOfServis = new RecordOfServis(idRecordOfServis, statusOfServis, new Computer().computerDB.readComputer(computerId), new Customer().customerDB.readCustomer(customerId)
 						, new Serviser().serviserDB.readServiser(serviserId), noteOfDefect, new Bill().billDB.readBill(billId), dateOfReciept, dateOfReturn);
 				listaRecordsOfServis.add(recordOfServis);
 			}
@@ -185,6 +186,24 @@ public class RecordOfServisDB
 			query = "SELECT * FROM recordofservis INNER JOIN bill ON recordofservis.billId = bill.idBill WHERE bill.isPaid = false";
 		MyArrayList<RecordOfServis> listaRecordsOfServis = readRecordsOfServis(query);
 		return listaRecordsOfServis;
+	}
+	
+	public MyArrayList<RecordOfServis> readRecordsOfServisByTypeOfComputer (TypeOfComputer typeOfComputer)
+	{
+		String query;
+		if (typeOfComputer == TypeOfComputer.Desktop)
+			query = "SELECT * FROM recordofservis INNER JOIN computer ON recordofservis.computerId = computer.idComputer WHERE computer.typeOfComputer = 'Desktop'";
+		else
+			query = "SELECT * FROM recordofservis INNER JOIN computer ON recordofservis.computerId = computer.idComputer WHERE computer.typeOfComputer = 'Laptop'";
+		MyArrayList<RecordOfServis> list = readRecordsOfServis(query);
+		return list;
+	}
+	
+	public MyArrayList<RecordOfServis> readRecordsOfServisByServiser (Serviser serviser)
+	{
+		String query = "SELECT * FROM recordofservis WHERE serviserId = " + serviser.getIdServiser();
+		MyArrayList<RecordOfServis> list = readRecordsOfServis(query);
+		return list;
 	}
 	
 }

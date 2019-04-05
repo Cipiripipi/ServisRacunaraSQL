@@ -20,7 +20,6 @@ public class Bill
 		this.note = note;
 		this.priceOfServis = priceOfServis;
 		this.isPaid = isPaid;
-		billDB.addBill(this);
 	}
 
 	public Bill(int idBill, String note, double priceOfServis, boolean isPaid) 
@@ -32,10 +31,15 @@ public class Bill
 		this.isPaid = isPaid;
 	}
 	
+	public String informationBill()
+	{
+		return "ID bill: " + this.idBill + ", Price of servis is " + this.priceOfServis + ", " + BillPaid.isPaid(this.isPaid) + "\nNote for bill: " + this.note + "\n";
+	}
+	
 	@Override
 	public String toString() 
 	{
-		return "ID bill: " + this.idBill + ", Price of servis is " + this.priceOfServis + ", " + BillPaid.isPaid(this.isPaid) + "\nNote for bill: " + this.note + "\n";
+		return "ID bill: " + this.idBill + ", Price of servis is " + this.priceOfServis + ", " + BillPaid.isPaid(this.isPaid);
 	}
 
 	public String getNote() {return note;}

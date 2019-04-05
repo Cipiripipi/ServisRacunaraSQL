@@ -1,40 +1,44 @@
 package servis;
 
-import db.KomitentDB;
+import db.CustomerDB;
 
-public class Komitent 
+public class Customer 
 {
-	private int idKomitent;
+	private int idCustomer;
 	private String name;
 	private String telephoneNumber;
 	
-	public KomitentDB komitentDB = new KomitentDB();
+	public CustomerDB customerDB = new CustomerDB();
 	
-	public Komitent () {}
+	public Customer () {}
 	
-	public Komitent(String name, String telephoneNumber) 
+	public Customer(String name, String telephoneNumber) 
 	{
 		super();
 		this.name = name;
 		this.telephoneNumber = telephoneNumber;
-		komitentDB.addKomitent(this);
 	}
 
-	public Komitent(int idKomitent, String name, String telephoneNumber) 
+	public Customer(int idCustomer, String name, String telephoneNumber) 
 	{
 		super();
-		this.idKomitent = idKomitent;
+		this.idCustomer = idCustomer;
 		this.name = name;
 		this.telephoneNumber = telephoneNumber;
+	}
+	
+	public String informationCustomer ()
+	{
+		return "Customer: " + this.idCustomer + " " + this.name + " " + this.telephoneNumber;
 	}
 	
 	@Override
 	public String toString() 
 	{
-		return "Komitent: " + this.idKomitent + " " + this.name + " " + this.telephoneNumber;
+		return "Customer: " + this.idCustomer + " " + this.name;
 	}
 
-	public int getIdKomitent() {return idKomitent;}
+	public int getIdCustomer() {return idCustomer;}
 	public String getName() {return name;}
 	public String getTelephoneNumber() {return telephoneNumber;}
 	public void setName(String name) {this.name = name;}

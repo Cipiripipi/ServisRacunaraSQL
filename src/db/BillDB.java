@@ -253,9 +253,43 @@ public class BillDB
 	 * @param operators >= for higher, <= for lower, = for equals
 	 * @return
 	 */
-	public MyArrayList<Bill> printSumByDate (String paid, Date date, String operators)
+	public MyArrayList<Bill> printSumByDate (String paid, Date date)
 	{
 		MyArrayList<Bill> list = new MyArrayList<>();
+		String query1 = "";
+		String query2 = "";
+		
+		if (paid.equalsIgnoreCase("true"))
+		{
+			query1 = "select * , SUM(priceOfServis) AS newField from bill INNER JOIN recordofservis ON bill.idBill = recordofservis.billId WHERE bill.isPaid = true AND recordofservis.dateOfReciept = '"+ date + "'";
+			query2 = "select * from bill INNER JOIN recordofservis ON bill.idBill = recordofservis.billId WHERE bill.isPaid = true AND recordofservis.dateOfReciept = '"+ date + "'";
+		}
+		else if (paid.equalsIgnoreCase("false"))
+		{
+			query1 = "select * , SUM(priceOfServis) AS newField from bill INNER JOIN recordofservis ON bill.idBill = recordofservis.billId WHERE bill.isPaid = false AND recordofservis.dateOfReciept = '"+ date + "'";
+			query2 = "select * from bill INNER JOIN recordofservis ON bill.idBill = recordofservis.billId WHERE bill.isPaid = false AND recordofservis.dateOfReciept = '"+ date + "'";
+		}
+		else
+		{
+			query1 = "select * , SUM(priceOfServis) AS newField from bill INNER JOIN recordofservis ON bill.idBill = recordofservis.billId WHERE recordofservis.dateOfReciept = '"+ date + "'";
+			query2 = "select * from bill INNER JOIN recordofservis ON bill.idBill = recordofservis.billId WHERE recordofservis.dateOfReciept = '"+ date + "'";
+		}
+		list = this.readBills(query2);
+		if (paid.equalsIgnoreCase("true"))
+		{
+			System.out.print("Sum of paid bill for date " + date + " is ");
+			this.printResult(query1);
+		}
+		else if (paid.equalsIgnoreCase("false"))
+		{
+			System.out.print("Sum of not paid bill for date " + date + " is ");
+			this.printResult(query1);
+		}
+		else 
+		{
+			System.out.print("Sum of bill for date " + date + " is ");
+			this.printResult(query1);
+		}
 		return list;
 	}
 	

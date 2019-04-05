@@ -23,7 +23,6 @@ public class Computer
 		this.model = model;
 		this.serialNumber = serialNumber;
 		this.note = note;
-		computerDB.addComputer(this);
 	}
 
 	public Computer(int idComputer, TypeOfComputer typeOfComputer, String brand, String model, String serialNumber, String note) 
@@ -36,11 +35,16 @@ public class Computer
 		this.serialNumber = serialNumber;
 		this.note = note;
 	}
+	
+	public String informationAboutComputer ()
+	{
+		return "Computer: " + this.idComputer + " " + this.typeOfComputer + " " + this.brand + " " + this.model + " " + this.serialNumber + " " + this.note;
+	}
 
 	@Override
 	public String toString() 
 	{
-		return "Computer: " + this.idComputer + " " + this.typeOfComputer + " " + this.brand + " " + this.model + " " + this.serialNumber + " " + this.note;
+		return "Computer: " + this.idComputer + " " + this.typeOfComputer + " " + this.brand + " " + this.model + " " + this.serialNumber;
 	}
 
 	public int getIdComputer() {return idComputer;}
