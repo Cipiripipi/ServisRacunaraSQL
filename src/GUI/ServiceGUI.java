@@ -200,5 +200,50 @@ public class ServiceGUI extends JFrame
 				new AddRecordOfServiceGUI();
 			}
 		});
+		
+		searchComputer.addActionListener(new ActionListener() 
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				new SearchComputerGUI();
+			}
+		});
+		
+		searchCustomer.addActionListener(new ActionListener() 
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				new SearchCustomerGUI();
+			}
+		});
+		
+		searchServiser.addActionListener(new ActionListener() 
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				new SearchServiserGUI();
+			}
+		});
+		
+		searchBill.addActionListener(new ActionListener() 
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				new SearchBillGUI();
+			}
+		});
+		
+		searchRecord.addActionListener(new ActionListener() 
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				new SearchRecordOfServisGUI();
+			}
+		});
 	}
 }
