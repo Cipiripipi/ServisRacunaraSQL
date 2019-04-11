@@ -17,6 +17,24 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import GUI.Bill.AddBillGUI;
+import GUI.Bill.SearchBillGUI;
+import GUI.Computer.AddComputerGUI;
+import GUI.Computer.SearchComputerGUI;
+import GUI.Customer.AddCustomerGUI;
+import GUI.Customer.SearchCustomerGUI;
+import GUI.RecordOfService.AddRecordOfServiceGUI;
+import GUI.RecordOfService.ListOfRecordByServiser;
+import GUI.RecordOfService.ListOfRecordByTypeOfComputer;
+import GUI.RecordOfService.SearchRecordOfServisGUI;
+import GUI.Serviser.AddServiserGUI;
+import GUI.Serviser.SearchServiserGUI;
+import servis.Bill;
+import servis.Computer;
+import servis.Customer;
+import servis.RecordOfServis;
+import servis.Serviser;
+
 @SuppressWarnings("serial")
 public class ServiceGUI extends JFrame 
 {
@@ -45,8 +63,8 @@ public class ServiceGUI extends JFrame
 	JButton listBill = new JButton("LIST OF BILL");
 	//bottom
 	JButton addNewRecord = new JButton("ADD NEW RECORD");
-	JButton setServiser = new JButton("SET SERVISER");
-	JButton setBill = new JButton("SET BILL");
+	JButton updateRecord = new JButton("UPDATE RECORD");
+	//JButton setBill = new JButton("SET BILL");
 	JButton searchRecord = new JButton("SEARCH RECORD");
 	JButton listRecords = new JButton("LIST OF RECORDS");
 	JButton changeStatus = new JButton("CHANGE STATUS");
@@ -129,8 +147,7 @@ public class ServiceGUI extends JFrame
 		Container container2 = new Container();
 		container2.setLayout(new GridLayout(1, 3, 5, 5));
 		container2.add(addNewRecord);
-		container2.add(setServiser);
-		container2.add(setBill);
+		container2.add(updateRecord);
 		
 		Container container3 = new Container();
 		container3.setLayout(new GridLayout(1, 2, 5, 5));
@@ -243,6 +260,67 @@ public class ServiceGUI extends JFrame
 			public void actionPerformed(ActionEvent e) 
 			{
 				new SearchRecordOfServisGUI();
+			}
+		});
+		
+		listComputer.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				new ListOf(LoadInCompoBox.loadComputer(new Computer().computerDB.readComputers()));
+			}
+		});
+		listCustomer.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				new ListOf(LoadInCompoBox.loadCustomer(new Customer().customerDB.readCustomer()));
+			}
+		});
+		
+		listServiser.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				new ListOf(LoadInCompoBox.loadServiser(new Serviser().serviserDB.readServisers()));
+			}
+		});
+		
+		listBill.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				new ListOf(LoadInCompoBox.loadBill(new Bill().billDB.readBillsPaid("ALL")));
+			}
+		});
+		listRecords.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				new ListOf(LoadInCompoBox.loadRecordOfServis(new RecordOfServis().recordOfServisDB.readAllRecordsOfServis()));
+			}
+		});
+		
+		listRecordsByServiser.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				new ListOfRecordByServiser();
+			}
+		});
+		
+		listRecordsByType.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				new ListOfRecordByTypeOfComputer();
 			}
 		});
 	}

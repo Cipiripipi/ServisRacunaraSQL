@@ -2,7 +2,7 @@ package servis;
 
 import db.CustomerDB;
 
-public class Customer 
+public class Customer implements InformationAbout
 {
 	private int idCustomer;
 	private String name;
@@ -27,11 +27,6 @@ public class Customer
 		this.telephoneNumber = telephoneNumber;
 	}
 	
-	public String informationCustomer ()
-	{
-		return "Customer: " + this.idCustomer + " " + this.name + " " + this.telephoneNumber;
-	}
-	
 	@Override
 	public String toString() 
 	{
@@ -43,5 +38,11 @@ public class Customer
 	public String getTelephoneNumber() {return telephoneNumber;}
 	public void setName(String name) {this.name = name;}
 	public void setTelephoneNumber(String telephoneNumber) {this.telephoneNumber = telephoneNumber;}
+
+	@Override
+	public String informationAbout() 
+	{
+		return "Customer: " + this.idCustomer + " " + this.name + " " + this.telephoneNumber;
+	}
 	
 }

@@ -2,7 +2,7 @@ package servis;
 
 import db.ComputerDB;
 
-public class Computer 
+public class Computer implements InformationAbout
 {
 	private int idComputer;
 	private TypeOfComputer typeOfComputer;
@@ -36,11 +36,6 @@ public class Computer
 		this.note = note;
 	}
 	
-	public String informationAboutComputer ()
-	{
-		return "Computer: " + this.idComputer + " " + this.typeOfComputer + " " + this.brand + " " + this.model + " " + this.serialNumber + " " + this.note;
-	}
-
 	@Override
 	public String toString() 
 	{
@@ -58,5 +53,11 @@ public class Computer
 	public void setModel(String model) {this.model = model;}
 	public void setSerialNumber(String serialNumber) {this.serialNumber = serialNumber;}
 	public void setNote(String note) {this.note = note;}
+
+	@Override
+	public String informationAbout() 
+	{
+		return "Computer: " + this.idComputer + " " + this.typeOfComputer + " " + this.brand + " " + this.model + " " + this.serialNumber + " " + this.note;
+	}
 
 }

@@ -2,7 +2,7 @@ package servis;
 
 import db.ServiserDB;
 
-public class Serviser 
+public class Serviser implements InformationAbout
 {
 	private int idServiser;
 	private String name;
@@ -42,4 +42,10 @@ public class Serviser
 	public void setName(String name) {this.name = name;}
 	public void setPassword(String password) {this.password = password;}
 	public void setSalary(double salary) {this.salary = salary;}
+
+	@Override
+	public String informationAbout() 
+	{
+		return "Serviser: " + this.idServiser + ", " + this.name;
+	}
 }

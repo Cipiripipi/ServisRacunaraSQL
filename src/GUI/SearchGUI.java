@@ -19,10 +19,10 @@ import javax.swing.SwingConstants;
 @SuppressWarnings("serial")
 public class SearchGUI extends JFrame 
 {
-	JLabel inputIdL = new JLabel("Input ID: ");
-	JTextField idTF = new JTextField();
-	JButton search = new JButton("SEARCH");
-	JTextArea result = new JTextArea();
+	protected JLabel inputIdL = new JLabel("Input ID: ");
+	protected JTextField idTF = new JTextField();
+	protected JButton search = new JButton("SEARCH");
+	protected JTextArea result = new JTextArea();
 	
 	public SearchGUI ()
 	{

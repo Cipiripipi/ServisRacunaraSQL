@@ -147,7 +147,7 @@ public class RecordOfServisDB
 				int idRecordOfServis = res.getInt("idRecordOfServis");
 				StatusOfServis statusOfServis = StatusOfServis.valueOf(res.getString("statusOfServis"));
 				int computerId = res.getInt("computerId");
-				int customerId = res.getInt("komitentId");
+				int customerId = res.getInt("customerId");
 				int serviserId = res.getInt("serviserId");
 				String noteOfDefect = res.getString("noteOfDefect");
 				int billId = res.getInt("billId");

@@ -4,7 +4,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import db.RecordOfServisDB;
 
-public class RecordOfServis
+public class RecordOfServis implements InformationAbout
 {
 	private int idRecordOfServis;
 	private StatusOfServis statusOfServis;
@@ -78,22 +78,22 @@ public class RecordOfServis
 	@Override
 	public String toString() 
 	{
-		String text = "---------------------\n";
+		String text = "\n";
 		text += "ID number: " + this.idRecordOfServis + ", status of device is " + this.statusOfServis.toString() + "\n";
-		text += this.customer + "\n";
-		text += this.computer + "\n";
-		if (this.serviser != null)
-			text += this.serviser + "\n";
-		else
-			text += "Serviser isn't assigned\n";
-		if (this.bill != null)
-			text += this.bill + "\n";
-		else
-			text += "Bill isn't created yet\n";
-		text += "Date of reciept - " + this.dateOfReciept + "\n";
-		if (this.dateOfReturn != null)
-			text += "Date of return - " + this.dateOfReturn + "\n";
-		text += "Note for computer:\n" + this.noteOfDefect + "\n";
+//		text += this.customer + "\n";
+//		text += this.computer + "\n";
+//		if (this.serviser != null)
+//			text += this.serviser + "\n";
+//		else
+//			text += "Serviser isn't assigned\n";
+//		if (this.bill != null)
+//			text += this.bill + "\n";
+//		else
+//			text += "Bill isn't created yet\n";
+//		text += "Date of reciept - " + this.dateOfReciept + "\n";
+//		if (this.dateOfReturn != null)
+//			text += "Date of return - " + this.dateOfReturn + "\n";
+//		text += "Note for computer:\n" + this.noteOfDefect + "\n";
 		return text;
 	}
 
@@ -111,5 +111,27 @@ public class RecordOfServis
 	public Computer getComputer() {return computer;}
 	public Customer getCustomer() {return customer;}
 	public Date getDateOfReciept() {return dateOfReciept;}
+
+	@Override
+	public String informationAbout() 
+	{
+		String text = "";
+		text += "ID number: " + this.idRecordOfServis + ", status of device is " + this.statusOfServis.toString() + "\n";
+		text += this.customer + "\n";
+		text += this.computer + "\n";
+		if (this.serviser != null)
+			text += this.serviser + "\n";
+		else
+			text += "Serviser isn't assigned\n";
+		if (this.bill != null)
+			text += this.bill + "\n";
+		else
+			text += "Bill isn't created yet\n";
+		text += "Date of reciept - " + this.dateOfReciept + "\n";
+		if (this.dateOfReturn != null)
+			text += "Date of return - " + this.dateOfReturn + "\n";
+		text += "Note for computer:\n" + this.noteOfDefect + "\n";
+		return text;
+	}
 	
 }

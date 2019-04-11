@@ -3,7 +3,7 @@ package servis;
 import db.BillDB;
 import util.BillPaid;
 import lombok.*;
-public class Bill 
+public class Bill implements InformationAbout
 {
 	@Getter @Setter private int idBill;
 	@Getter @Setter private String note;
@@ -31,11 +31,6 @@ public class Bill
 		this.isPaid = isPaid;
 	}
 	
-	public String informationBill()
-	{
-		return "ID bill: " + this.idBill + ", Price of servis is " + this.priceOfServis + ", " + BillPaid.isPaid(this.isPaid) + "\nNote for bill: " + this.note + "\n";
-	}
-	
 	@Override
 	public String toString() 
 	{
@@ -49,5 +44,11 @@ public class Bill
 	public boolean isPaid() {return isPaid;}
 	public void setPaid(boolean isPaid) {this.isPaid = isPaid;}
 	public int getIdBill() {return idBill;}
+
+	@Override
+	public String informationAbout() 
+	{
+		return "ID bill: " + this.idBill + ", Price of servis is " + this.priceOfServis + ", " + BillPaid.isPaid(this.isPaid) + "\nNote for bill: " + this.note + "\n";
+	}
 	
 }
