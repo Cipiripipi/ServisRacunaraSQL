@@ -10,6 +10,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -17,23 +18,24 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import GUI.LoadInCompoBox;
+import servis.PaidBill;
 import servis.RecordOfServis;
 import servis.Serviser;
+import servis.StatusOfServis;
+import servis.TypeOfComputer;
 
 @SuppressWarnings("serial")
-public class ListOfRecordByServiser extends JFrame 
+public class ListOfRecordBy extends JFrame 
 {
-	Serviser s = null;
 	private JTextArea result = new JTextArea();
-	private JComboBox<Serviser> listServiser = LoadInCompoBox.loadServiser(new Serviser().serviserDB.readServisers());
+	private JComboBox<?> listChoise;
 	private JButton showAll = new JButton("SHOW ALL");
 	private JComboBox<RecordOfServis> listResult = new JComboBox<>();
 	
-	
-	public ListOfRecordByServiser() 
+	public ListOfRecordBy (JComboBox<?> listChoise)
 	{
-		super("List of record by Serviser");
+		super("List of record");
+		this.listChoise = listChoise;
 		setWindowListOfRecordBy();
 		setLabelAndField();
 	}
@@ -63,36 +65,66 @@ public class ListOfRecordByServiser extends JFrame
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		listServiser.addActionListener(new ActionListener() 
+		
+		listChoise.addActionListener(new ActionListener() 
 		{
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				if (listServiser.getSelectedItem() != null)
+				if (listChoise != null)
 				{
 					listResult.removeAllItems();
-					s = (Serviser) listServiser.getSelectedItem();
-					//System.out.println(s);
 					
-					ArrayList<RecordOfServis> lists = new RecordOfServis().recordOfServisDB.readRecordsOfServisByServiser(s);
-					lists.add(0, null);
-					for (RecordOfServis ros : lists) 
+					if (listChoise.getSelectedItem() instanceof Serviser)
 					{
-						listResult.addItem(ros);
+						System.out.println("Serviser");
+						ArrayList<RecordOfServis> lists = new RecordOfServis().recordOfServisDB.readRecordsOfServisByServiser((Serviser) listChoise.getSelectedItem());
+						lists.add(0, null);
+						for (RecordOfServis ros : lists) 
+							listResult.addItem(ros);
+					}
+					else if (listChoise.getSelectedItem() instanceof TypeOfComputer)
+					{
+						System.out.println("TypeOfComputer");
+						ArrayList<RecordOfServis> lists = new RecordOfServis().recordOfServisDB.readRecordsOfServisByTypeOfComputer((TypeOfComputer) listChoise.getSelectedItem());
+						lists.add(0, null);
+						for (RecordOfServis ros : lists) 
+							listResult.addItem(ros);
+					}
+					else if (listChoise.getSelectedItem() instanceof StatusOfServis)
+					{
+						System.out.println("StatusOfServis");
+						ArrayList<RecordOfServis> lists = new RecordOfServis().recordOfServisDB.readRecordsOfServisByStatus((StatusOfServis) listChoise.getSelectedItem());
+						lists.add(0, null);
+						for (RecordOfServis ros : lists) 
+							listResult.addItem(ros);
+					}
+					else if (listChoise.getSelectedItem() instanceof PaidBill)
+					{
+						ArrayList<RecordOfServis> lists;
+						System.out.println("PaidBill");
+						if (listChoise.getSelectedItem().toString().equals("PAID"))
+						{
+							lists = new RecordOfServis().recordOfServisDB.readRecordsOfServisPaid(true);
+						}
+						else
+							lists = new RecordOfServis().recordOfServisDB.readRecordsOfServisPaid(false);
+						
+						lists.add(0, null);
+						for (RecordOfServis ros : lists) 
+							listResult.addItem(ros);
 					}
 					
-//					listResult = LoadInCompoBox.loadRecordOfServis(new RecordOfServis().recordOfServisDB.readRecordsOfServisByServiser(s));
-//					System.out.println(listResult.getItemAt(1));
-//					System.out.println(listResult.getItemCount());
 				}
 			}
 		});
 		
-		panel.add(listServiser, gbc);
+		panel.add(listChoise, gbc);
 		
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
+		
 		listResult.addActionListener(new ActionListener() 
 		{
 			@Override
@@ -124,6 +156,7 @@ public class ListOfRecordByServiser extends JFrame
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.insets = new Insets(10, 150, 10, 150); 
 		showAll.setPreferredSize(new Dimension(40, 40));
+		
 		showAll.addActionListener(new ActionListener() 
 		{
 			@Override
@@ -138,11 +171,11 @@ public class ListOfRecordByServiser extends JFrame
 			result.setText(all);	
 			}
 		});
+		
 		panel.add(showAll, gbc);
 		
 		getContentPane().add(panel, BorderLayout.NORTH);
 		pack();
 	}
-	
 	
 }

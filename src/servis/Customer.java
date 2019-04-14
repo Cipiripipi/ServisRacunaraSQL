@@ -44,5 +44,10 @@ public class Customer implements InformationAbout
 	{
 		return "Customer: " + this.idCustomer + " " + this.name + " " + this.telephoneNumber;
 	}
+
+	@Override
+	public int getIdI() {
+		return idCustomer;
+	}
 	
 }

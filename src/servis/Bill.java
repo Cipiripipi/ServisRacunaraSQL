@@ -50,5 +50,10 @@ public class Bill implements InformationAbout
 	{
 		return "ID bill: " + this.idBill + ", Price of servis is " + this.priceOfServis + ", " + BillPaid.isPaid(this.isPaid) + "\nNote for bill: " + this.note + "\n";
 	}
+
+	@Override
+	public int getIdI() {
+		return idBill;
+	}
 	
 }

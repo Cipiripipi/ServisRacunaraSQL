@@ -24,8 +24,7 @@ import GUI.Computer.SearchComputerGUI;
 import GUI.Customer.AddCustomerGUI;
 import GUI.Customer.SearchCustomerGUI;
 import GUI.RecordOfService.AddRecordOfServiceGUI;
-import GUI.RecordOfService.ListOfRecordByServiser;
-import GUI.RecordOfService.ListOfRecordByTypeOfComputer;
+import GUI.RecordOfService.ListOfRecordBy;
 import GUI.RecordOfService.SearchRecordOfServisGUI;
 import GUI.Serviser.AddServiserGUI;
 import GUI.Serviser.SearchServiserGUI;
@@ -67,8 +66,8 @@ public class ServiceGUI extends JFrame
 	//JButton setBill = new JButton("SET BILL");
 	JButton searchRecord = new JButton("SEARCH RECORD");
 	JButton listRecords = new JButton("LIST OF RECORDS");
-	JButton changeStatus = new JButton("CHANGE STATUS");
-	JButton changeNote = new JButton("CHANGE NOTE");
+	JButton listRecordsByStatus = new JButton("LIST RECORD BY STATUS");
+	JButton listRecordsByPaid = new JButton("LIST RECORD BY PAID");
 	JButton listRecordsByType = new JButton("LIST RECORD BY TYPE OF COMPUTER");
 	JButton listRecordsByServiser = new JButton("LIST RECORD BY SERVISERS");
 	
@@ -156,8 +155,8 @@ public class ServiceGUI extends JFrame
 		
 		Container container4 = new Container();
 		container4.setLayout(new GridLayout(1, 2, 5, 5));
-		container4.add(changeStatus);
-		container4.add(changeNote);
+		container4.add(listRecordsByStatus);
+		container4.add(listRecordsByPaid);
 		
 		Container container5 = new Container();
 		container5.setLayout(new GridLayout(1, 2, 5, 5));
@@ -311,7 +310,7 @@ public class ServiceGUI extends JFrame
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				new ListOfRecordByServiser();
+				new ListOfRecordBy(LoadInCompoBox.loadServiser(new Serviser().serviserDB.readServisers()));
 			}
 		});
 		
@@ -320,8 +319,25 @@ public class ServiceGUI extends JFrame
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				new ListOfRecordByTypeOfComputer();
+				new ListOfRecordBy(LoadInCompoBox.loadTypeOfComputer());
 			}
 		});
+		listRecordsByStatus.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				new ListOfRecordBy(LoadInCompoBox.loadStatus());
+			}
+		});
+		listRecordsByPaid.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				new ListOfRecordBy(LoadInCompoBox.loadRecordByPaid());
+			}
+		});
+		
 	}
 }

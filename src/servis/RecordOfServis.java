@@ -133,5 +133,10 @@ public class RecordOfServis implements InformationAbout
 		text += "Note for computer:\n" + this.noteOfDefect + "\n";
 		return text;
 	}
+
+	@Override
+	public int getIdI() {
+		return idRecordOfServis;
+	}
 	
 }

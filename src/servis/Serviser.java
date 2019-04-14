@@ -48,4 +48,9 @@ public class Serviser implements InformationAbout
 	{
 		return "Serviser: " + this.idServiser + ", " + this.name;
 	}
+
+	@Override
+	public int getIdI() {
+		return idServiser;
+	}
 }

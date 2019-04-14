@@ -2,6 +2,14 @@ package servis;
 
 public enum StatusOfServis 
 {
+	NULL 
+	{
+		@Override
+		public String toString() 
+		{
+			return "";
+		}
+	},
 	Reception 
 	{
 		@Override

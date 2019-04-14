@@ -60,4 +60,9 @@ public class Computer implements InformationAbout
 		return "Computer: " + this.idComputer + " " + this.typeOfComputer + " " + this.brand + " " + this.model + " " + this.serialNumber + " " + this.note;
 	}
 
+	@Override
+	public int getIdI() {
+		return idComputer;
+	}
+
 }

@@ -206,4 +206,11 @@ public class RecordOfServisDB
 		return list;
 	}
 	
+	public MyArrayList<RecordOfServis> readRecordsOfServisByStatus (StatusOfServis sos)
+	{
+		String query = "SELECT * FROM recordofservis WHERE statusOfServis = '" + sos.toString() + "'";
+		MyArrayList<RecordOfServis> list = readRecordsOfServis(query);
+		return list;
+	}
+	
 }

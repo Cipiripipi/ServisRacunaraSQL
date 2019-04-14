@@ -1,6 +1,6 @@
 package servis;
 
-public enum TypeOfComputer
+public enum PaidBill 
 {
 	NULL 
 	{
@@ -10,20 +10,20 @@ public enum TypeOfComputer
 			return "";
 		}
 	},
-	Desktop 
+	PAID 
 	{
 		@Override
 		public String toString() 
 		{
-			return "Desktop";
+			return "PAID";
 		}
 	},
-	Laptop
+	NOT_PAID 
 	{
 		@Override
 		public String toString() 
 		{
-			return "Laptop";
+			return "NOT PAID";
 		}
-	}
+	},
 }

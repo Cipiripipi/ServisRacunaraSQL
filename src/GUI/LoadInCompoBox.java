@@ -1,14 +1,14 @@
 package GUI;
 
 import java.util.ArrayList;
-
 import javax.swing.JComboBox;
-
 import servis.Bill;
 import servis.Computer;
 import servis.Customer;
+import servis.PaidBill;
 import servis.RecordOfServis;
 import servis.Serviser;
+import servis.StatusOfServis;
 import servis.TypeOfComputer;
 
 public class LoadInCompoBox 
@@ -59,6 +59,18 @@ public class LoadInCompoBox
 	{
 		JComboBox<TypeOfComputer> listTypeCB = new JComboBox<>(TypeOfComputer.values());
 		return listTypeCB;
+	}
+	
+	public static JComboBox<StatusOfServis> loadStatus ()
+	{
+		JComboBox<StatusOfServis> listStatusCB = new JComboBox<>(StatusOfServis.values());
+		return listStatusCB;
+	}
+	
+	public static JComboBox<PaidBill> loadRecordByPaid ()
+	{
+		JComboBox<PaidBill> listPaidCB = new JComboBox<>(PaidBill.values());
+		return listPaidCB;
 	}
 	
 }
