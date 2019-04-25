@@ -6,5 +6,6 @@
 	<classpathentry kind="lib" path="External/mysql-connector-java-8.0.15.jar"/>
 	<classpathentry kind="lib" path="C:/Users/LapTop LenovoT510/Desktop/JAVA zadaci/Eclipse/IgricaVesanjeV2/Libaries/org.apache.commons.io.jar"/>
 	<classpathentry kind="lib" path="External/lombok.jar"/>
+	<classpathentry kind="lib" path="External/JavaLOC.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

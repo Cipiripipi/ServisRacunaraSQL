@@ -15,7 +15,7 @@ public class MethodsForROS
 		String text = "";
 		
 		if (statusOfServis == StatusOfServis.TakenOver)
-			if (recordOfServis.getBill().isPaid() == true)
+			if (recordOfServis.getBill() != null && recordOfServis.getBill().isPaid() == true)
 			{
 				recordOfServis.setDateOfReturn(java.sql.Date.valueOf(LocalDate.now()));
 				text = "Devices status is set to TakenOver";

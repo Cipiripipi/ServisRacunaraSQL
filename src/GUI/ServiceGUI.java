@@ -21,11 +21,13 @@ import GUI.Bill.AddBillGUI;
 import GUI.Bill.SearchBillGUI;
 import GUI.Computer.AddComputerGUI;
 import GUI.Computer.SearchComputerGUI;
+import GUI.Computer.UpdateComputer;
 import GUI.Customer.AddCustomerGUI;
 import GUI.Customer.SearchCustomerGUI;
 import GUI.RecordOfService.AddRecordOfServiceGUI;
 import GUI.RecordOfService.ListOfRecordBy;
 import GUI.RecordOfService.SearchRecordOfServisGUI;
+import GUI.RecordOfService.UpdateRecordOfService;
 import GUI.Serviser.AddServiserGUI;
 import GUI.Serviser.SearchServiserGUI;
 import servis.Bill;
@@ -63,7 +65,6 @@ public class ServiceGUI extends JFrame
 	//bottom
 	JButton addNewRecord = new JButton("ADD NEW RECORD");
 	JButton updateRecord = new JButton("UPDATE RECORD");
-	//JButton setBill = new JButton("SET BILL");
 	JButton searchRecord = new JButton("SEARCH RECORD");
 	JButton listRecords = new JButton("LIST OF RECORDS");
 	JButton listRecordsByStatus = new JButton("LIST RECORD BY STATUS");
@@ -336,6 +337,24 @@ public class ServiceGUI extends JFrame
 			public void actionPerformed(ActionEvent e) 
 			{
 				new ListOfRecordBy(LoadInCompoBox.loadRecordByPaid());
+			}
+		});
+		
+		updateComputer.addActionListener(new ActionListener() 
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				new UpdateComputer();
+			}
+		});
+		
+		updateRecord.addActionListener(new ActionListener() 
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				new UpdateRecordOfService();
 			}
 		});
 		
